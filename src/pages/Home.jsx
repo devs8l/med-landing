@@ -102,6 +102,9 @@ const Home = () => {
         </div>
       </div>
 
+      <div className='w-full  mt-20'>
+        <img className='w-full h-full object-cover' src="/page4.png" alt="" />
+      </div>
 
       {/* part5 */}
       <div className='flex gap-5 justify-center items-center relative h-[50vh] mt-20 w-full bg-[#2f85f7] rounded-3xl overflow-hidden'>
