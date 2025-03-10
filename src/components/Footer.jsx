@@ -6,7 +6,7 @@ const Footer = () => {
       {/* Logo and Certificates Section */}
       <div className='flex flex-col gap-6'>
         <div className='w-20 h-20'>
-          <img src="/jnc.png" alt="" />
+          <img src="/jnc.svg" alt="" />
         </div>
         <h3 className='text-sec-text font-medium text-xl'>Certificates</h3>
         <div className='flex gap-6 mt-2'>

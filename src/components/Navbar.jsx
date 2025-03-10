@@ -4,7 +4,7 @@ const Navbar = () => {
   return (
     <div className='flex justify-between items-center '>
         <div className='w-20 h-20'>
-            <img className='object-contain w-full h-full' src="/jnc.png" alt="" />
+            <img className='object-contain w-full h-full' src="/jnc.svg" alt="" />
         </div>
         <div className='flex gap-10 p-2 items-center'>
             <div >About</div>
