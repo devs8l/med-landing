@@ -1,6 +1,23 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 const Home = () => {
+  const [isMobile, setIsMobile] = useState(false)
+
+  // Effect to check screen size and update state
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth < 768) // 768px is the md breakpoint in Tailwind
+    }
+
+    // Check on initial load
+    checkIfMobile()
+
+    // Add event listener for resize
+    window.addEventListener('resize', checkIfMobile)
+
+    // Clean up event listener
+    return () => window.removeEventListener('resize', checkIfMobile)
+  }, [])
   return (
     <div className='w-full min-h-screen flex flex-col'>
 
@@ -17,33 +34,43 @@ const Home = () => {
       {/* part2 */}
       <div className='grad w-full h-[150vh] absolute top-100 left-0'></div>
 
-      <div className='flex flex-col md:flex-row justify-center md:justify-between items-center mt-1 h-[60vh] md:h-[50vh] z-100  md:gap-5 relative'>
+      <div className='flex flex-col md:flex-row justify-center md:justify-between items-center mt-1 h-[70vh] md:h-[50vh] z-100  md:gap-5 relative'>
         <div className='flex flex-col w-full md:w-1/2 md:p-4 p-10 md:h-[90%] text-center md:text-start h-full mt-5 md:px-8 lg:px-20 justify-center gap-3 md:gap-5 bg-[#FFFFFF99] md:rounded-4xl rounded-t-4xl'>
-          <h1 className='text-primary-text text-2xl md:text-4xl lg:text-5xl font-medium'>Reclaim Your Time,<br  />
+          <h1 className='text-primary-text text-2xl md:text-4xl lg:text-5xl font-medium'>Reclaim Your Time,<br />
             Enhance Patient Care</h1>
           <h3 className='text-sec-text text-base md:text-lg mb-4 md:mb-8'>Empowering Physicians with AI-Driven Efficiency,<br className='hidden md:block' /> Insightful Support, and Seamless Integration.</h3>
         </div>
-        <img src="/hero-2.png" alt="" className='w-full md:w-1/2 h-full md:mb-5 mt-[-40px] md:mt-0' />
+        <img 
+          src={isMobile ? "/doc-1.png" : "/hero-2.png"} 
+          alt="Medical professional" 
+          className='w-full md:w-1/2 h-full md:mb-5 mt-[-40px] md:mt-0' 
+        />
       </div>
 
       {/* part3 */}
-      <div className='flex justify-between flex-col items-center p-4 md:p-10 mt-5 z-100 gap-5 bg-[#fffffff8] rounded-3xl'>
-        <h1 className='text-primary-text text-2xl md:text-4xl font-medium text-center'>Challenges in typical documentation setting</h1>
-        <div className='flex flex-col md:flex-row gap-6 md:gap-10 mt-5 md:mt-10'>
-          <div className='w-full md:w-1/3 p-4 md:p-5 flex flex-col gap-4 md:gap-6'>
-            <img src="/doc.png" alt="" className='w-full max-w-[200px] mx-auto' />
-            <h4 className='text-lg md:text-xl font-medium text-center md:text-left'>Documentation Burden</h4>
-            <p className='text-center md:text-left'>Studies show similar AI scribe tools save physicians an average of one hour per day on paperwork.</p>
+      <div className="flex justify-between flex-col items-center p-4 md:p-10 mt-5 z-100 gap-5 bg-[#fffffff8] rounded-3xl">
+        <h1 className="text-primary-text text-2xl md:text-4xl font-medium text-center">Challenges in typical documentation setting</h1>
+        <div className="flex flex-col md:flex-row gap-6 md:gap-10 mt-5 md:mt-10">
+          <div className="w-full md:w-1/3 p-4 md:p-5 flex flex-col gap-4 md:gap-6">
+            <div className="aspect-square w-full max-w-[300px] h-[300px] mx-auto flex items-center justify-center">
+              <img src="/img-1.png" alt="Documentation Burden" className="w-full h-full object-contain" />
+            </div>
+            <h4 className="text-lg md:text-xl font-medium text-center md:text-left">Documentation Burden</h4>
+            <p className="text-center md:text-left">Studies show similar AI scribe tools save physicians an average of one hour per day on paperwork.</p>
           </div>
-          <div className='w-full md:w-1/3 p-4 md:p-5 flex flex-col gap-4 md:gap-6'>
-            <img src="/doc.png" alt="" className='w-full max-w-[200px] mx-auto' />
-            <h4 className='text-lg md:text-xl font-medium text-center md:text-left'>Information Overload</h4>
-            <p className='text-center md:text-left'>Quickly access and synthesize critical patient data from across your hospital systems.</p>
+          <div className="w-full md:w-1/3 p-4 md:p-5 flex flex-col gap-4 md:gap-6">
+            <div className="aspect-square w-full max-w-[300px] h-[300px] mx-auto flex items-center justify-center">
+              <img src="/img-2.png" alt="Information Overload" className="w-full h-full object-contain" />
+            </div>
+            <h4 className="text-lg md:text-xl font-medium text-center md:text-left">Information Overload</h4>
+            <p className="text-center md:text-left">Quickly access and synthesize critical patient data from across your hospital systems.</p>
           </div>
-          <div className='w-full md:w-1/3 p-4 md:p-5 flex flex-col gap-4 md:gap-6'>
-            <img src="/doc.png" alt="" className='w-full max-w-[200px] mx-auto' />
-            <h4 className='text-lg md:text-xl font-medium text-center md:text-left'>Missed Insights</h4>
-            <p className='text-center md:text-left'>Leverage AI-powered analysis to uncover potential diagnoses and next steps you might otherwise overlook.</p>
+          <div className="w-full md:w-1/3 p-4 md:p-5 flex flex-col gap-4 md:gap-6">
+            <div className="aspect-square w-full max-w-[300px] h-[300px] mx-auto flex items-center justify-center">
+              <img src="/img-3.png" alt="Missed Insights" className="w-full h-full object-contain" />
+            </div>
+            <h4 className="text-lg md:text-xl font-medium text-center md:text-left">Missed Insights</h4>
+            <p className="text-center md:text-left">Leverage AI-powered analysis to uncover potential diagnoses and next steps you might otherwise overlook.</p>
           </div>
         </div>
       </div>
@@ -100,7 +127,7 @@ const Home = () => {
       </div>
 
       <div className='w-full mt-10 md:mt-20'>
-        <img className='w-full h-full object-cover' src="/page4.png" alt="" />
+        <img className='w-full h-full object-cover' src={isMobile?"/doc-2.png":"/page4.png"} alt="" />
       </div>
 
       {/* part5 */}
