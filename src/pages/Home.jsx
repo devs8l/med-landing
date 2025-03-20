@@ -2,9 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 
 const Home = () => {
   const [isMobile, setIsMobile] = useState(false)
-  const [scrollY, setScrollY] = useState(0)
-  const cardsContainerRef = useRef(null)
-  const cardRefs = useRef([])
+  const cardHeight = 50; // Height in vh units
 
   // Effect to check screen size and update state
   useEffect(() => {
@@ -21,44 +19,6 @@ const Home = () => {
     // Clean up event listener
     return () => window.removeEventListener('resize', checkIfMobile)
   }, [])
-
-  // Effect to handle scroll
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY)
-    }
-
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
-  // Effect to handle card animations
-  // Effect to handle card animations
-  useEffect(() => {
-    if (!cardsContainerRef.current) return;
-
-    const containerTop = cardsContainerRef.current.offsetTop;
-    const cardHeight = cardsContainerRef.current.offsetHeight / 3; // Adjust based on number of cards
-    const triggerOffset = isMobile ? 100 : 200;
-
-    cardRefs.current.forEach((card, index) => {
-      if (!card) return;
-
-      const cardTriggerPosition = containerTop + (index * cardHeight) - triggerOffset;
-
-      if (scrollY >= cardTriggerPosition) {
-        card.style.position = 'sticky';
-        // Apply different top values based on index to maintain proper spacing
-        card.style.top = `${10 + (index * 0)}vh`; // All cards at same position (10vh)
-        card.style.zIndex = index + 1; // Ensures correct stacking order
-        card.style.marginTop = '0'; // Remove margin when sticky
-      } else {
-        card.style.position = 'relative';
-        card.style.top = '0';
-        card.style.marginTop = index === 0 ? '0' : '2.5rem'; // Restore gap when not sticky (gap-10 = 2.5rem)
-      }
-    });
-  }, [scrollY, isMobile]);
 
   return (
     <div className='w-full min-h-screen flex flex-col'>
@@ -117,18 +77,21 @@ const Home = () => {
         </div>
       </div>
 
-      {/* part4 - Scrolling Cards with Overlap Effect */}
+      {/* part4 - Simplified Overlapping Cards */}
       <div className='z-20 flex flex-col justify-between mt-10 md:mt-20 items-center w-full'>
-        <h1 className='text-primary-text text-2xl md:text-4xl font-medium text-center px-4'>This is how MedCopilot bridges the gap</h1>
+        <h1 className='text-primary-text mb-20 text-2xl md:text-4xl font-medium text-center px-4'>This is how MedCopilot bridges the gap</h1>
 
-        {/* Container for the scrolling cards */}
-        <div ref={cardsContainerRef} className='w-full flex flex-col gap-10 mt-10 md:mt-20 relative' style={{ height: '180vh' }}>
+        {/* Container for the overlapping cards */}
+        <div className='w-full relative' style={{ height: `${cardHeight * 3 + 100}vh` }}>
           {/* Card 1 */}
-          <div
-            ref={el => cardRefs.current[0] = el}
-            className='card-container w-full transition-all duration-300 '
+          <div 
+            className='w-full sticky top-20 '
+            style={{ 
+              zIndex: 3,
+              height: `${cardHeight}vh`
+            }}
           >
-            <div className='flex flex-col-reverse md:flex-row gap-5 justify-start items-center relative md:h-[50vh] w-full bg-[#2f85f7] rounded-3xl overflow-hidden'>
+            <div className='flex flex-col-reverse md:flex-row gap-5 justify-start items-center relative h-full w-full bg-[#2f85f7] rounded-3xl overflow-hidden'>
               <img src="/hero-main.png" className='absolute w-full h-full object-cover opacity-30' alt="" />
               <div className='flex flex-col gap-5 md:gap-10 z-20 justify-center items-center w-full md:w-1/2 p-6 md:p-0'>
                 <div className='flex flex-col gap-3 md:gap-5 items-center md:items-start'>
@@ -145,11 +108,15 @@ const Home = () => {
           </div>
 
           {/* Card 2 */}
-          <div
-            ref={el => cardRefs.current[1] = el}
-            className='card-container w-full transition-all duration-300 '
+          <div 
+            className='w-full sticky top-20'
+            style={{ 
+              zIndex: 5, 
+              height: `${cardHeight}vh`,
+              marginTop: `${cardHeight}vh`
+            }}
           >
-            <div className='flex flex-col md:flex-row-reverse items-center gap-5 relative md:h-[50vh] w-full bg-[#2f85f7] rounded-3xl overflow-hidden'>
+            <div className='flex flex-col md:flex-row-reverse items-center gap-5 relative h-full w-full bg-[#2f85f7] rounded-3xl overflow-hidden'>
               <img src="/hero-main.png" className='absolute w-full h-full object-cover opacity-30' alt="" style={{ objectPosition: '95% 100%' }} />
               <div className='flex flex-col gap-5 md:gap-10 z-20 justify-start items-center w-full md:w-1/2 p-6 md:p-0'>
                 <div className='flex flex-col gap-3 md:gap-5 items-center md:items-start'>
@@ -166,11 +133,15 @@ const Home = () => {
           </div>
 
           {/* Card 3 */}
-          <div
-            ref={el => cardRefs.current[2] = el}
-            className='card-container w-full transition-all duration-300'
+          <div 
+            className='w-full sticky top-20'
+            style={{ 
+              zIndex: 6, 
+              height: `${cardHeight}vh`,
+              marginTop: `${cardHeight}vh`
+            }}
           >
-            <div className='flex flex-col-reverse md:flex-row gap-5 relative md:h-[50vh] items-center w-full bg-[#2f85f7] rounded-3xl overflow-hidden'>
+            <div className='flex flex-col-reverse md:flex-row gap-5 relative h-full items-center w-full bg-[#2f85f7] rounded-3xl overflow-hidden'>
               <img src="/hero-main.png" className='absolute w-full h-full object-cover opacity-30' alt="" />
               <div className='flex flex-col gap-5 md:gap-10 z-20 justify-center items-center w-full md:w-1/2 p-6 md:p-0'>
                 <div className='flex flex-col gap-3 md:gap-5 md:items-start'>
@@ -204,9 +175,6 @@ const Home = () => {
           </div>
         </div>
       </div>
-
-
-
     </div>
   )
 }
